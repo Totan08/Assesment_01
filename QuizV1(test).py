@@ -53,20 +53,6 @@ def instructions():
 
 
 # Safe equation generation
-def generate_addition(low, high):
-    answer = random.randint(low, high)
-    num1 = random.randint(low, answer)
-    num2 = answer - num1
-    return num1, num2, answer, "+"
-
-
-def generate_subtraction(low, high):
-    answer = random.randint(low, high)
-    num1 = random.randint(answer, high)
-    num2 = num1 - answer
-    return num1, num2, answer, "-"
-
-
 def generate_multiplication(low, high):
     for _ in range(1000):
         answer = random.randint(low, high)
@@ -75,8 +61,8 @@ def generate_multiplication(low, high):
         if factors:
             num1, num2 = random.choice(factors)
             return num1, num2, answer, "x"
-    # fallback
-    return generate_addition(low, high)
+        # fallback
+    return generate_multiplication(low, high)
 
 
 def generate_division(low, high):
@@ -89,7 +75,7 @@ def generate_division(low, high):
         if low <= dividend <= high:
             return dividend, divisor, answer, "÷"
     # fallback
-    return generate_addition(low, high)
+    return generate_division(low, high)
 
 
 # ---------------- MAIN PROGRAM ----------------
@@ -100,7 +86,6 @@ if yes_no("Do you want to read the instructions? ") == "yes":
 
 
 # ---------------- SAFE ROUNDS INPUT ----------------
-
 while True:
     rounds_input = input("Rounds <enter for infinite>: ").strip().lower()
 
@@ -125,13 +110,11 @@ while True:
 
 
 # ---------------- DEFAULT OR CUSTOM RANGE ----------------
-
 use_default = yes_no("Do you want to use the default game parameters? ")
-
 
 if use_default == "yes":
     low_num = 10
-    high_num = 100
+    high_num = 50
 else:
     while True:
         low_num = int_check("Low Number? ")
@@ -214,7 +197,7 @@ print(f"😢 Lost: {percent_lost:.2f}%")
 
 if yes_no("Do you want to see your game history? ") == "yes":
     if rounds_played == 0:
-        print("You didn't complete any rounds, therefore we have no history but I'll give you the win anyway")
+        print("You didn't complete any rounds, therefore we have no history but I'll give you the win anyway.")
     else:
         for item in game_history:
             print(item)
