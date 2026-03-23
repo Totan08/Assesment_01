@@ -1,6 +1,6 @@
 import random
 
-# ---------------- FUNCTIONS ----------------
+# Checks user says yes (y) or no (n)
 def yes_no(question):
     while True:
         response = input(question).lower().strip()
@@ -132,7 +132,7 @@ use_default = yes_no("Do you want to use the default game parameters? ")
 
 if use_default == "yes":
     low_num = 10
-    high_num = 100
+    high_num = 50
 else:
     while True:
         low_num = int_check("Low Number? ")
@@ -156,7 +156,7 @@ while rounds_played < num_rounds:
     if mode == "infinite":
         print(f"\n💿 Question {rounds_played + 1} (Infinite Mode)")
     else:
-        print(f"\n💿 Question {rounds_played + 1} of {int(num_rounds)}")
+        print(f"\n💿 Question {rounds_played + 1} of {int(num_rounds)} 💿")
 
     # Generate unique question
     while True:
@@ -185,7 +185,6 @@ while rounds_played < num_rounds:
     )
 
     if user_answer == "xxx":
-        print("\nYou exited the game successfully.")
         break
 
     rounds_played += 1
@@ -222,9 +221,9 @@ print(f"😢 Lost: {percent_lost:.2f}%")
 # ---------------- HISTORY ----------------
 if yes_no("Do you want to see your game history? ") == "yes":
     if not game_history:
-        print("You didn't complete any rounds, therefore we have no history but I'll give you the win anyway.")
+        print("You didn't complete any rounds, therefore we have no history but you get the win anyway. :D")
     else:
         for item in game_history:
             print(item)
 
-print("\nThanks for playing this Quiz!")
+print("\n!!! Thanks for playing !!!")
