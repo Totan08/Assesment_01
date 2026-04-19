@@ -27,6 +27,8 @@ def instructions():
     print("""
                 **** Instructions ****
                 
+                ⚠️⚠️⚠️ WARNING! ⚠️⚠️⚠️
+                
 - Choose number of rounds or press <enter> for infinite mode.
 - Choose operations (+, -, x, ÷) first.
 - Then choose difficulty (Easy / Medium / Hard) which automatically sets the range.
@@ -59,19 +61,9 @@ def choose_difficulty():
         elif choice in ["medium", "m"]:
             return 13, 40, "Medium"
         elif choice in ["hard", "h"]:
-            return 50, 100, "Hard"
+            return 50, 500, "Hard"
         else:
             print("Please choose Easy, Medium or Hard.")
-
-
-# -------------------- Weighted Shuffle --------------------
-def weighted_shuffle(questions):
-    weighted = []
-    for q in questions:
-        weighted.extend([q] * 3 if q[3] == "x" else [q])
-    random.shuffle(weighted)
-    return weighted
-
 
 # -------------------- Question Pool --------------------
 def generate_question_pool(low, high, ops):
@@ -150,14 +142,6 @@ selected_ops = choose_operations()
 
 # -------------------- Difficulty --------------------
 low_num, high_num, difficulty_name = choose_difficulty()
-
-
-# -------------------- Generate Questions --------------------
-question_pool = generate_question_pool(low_num, high_num, selected_ops)
-if not question_pool:
-    print("No valid questions possible.")
-    exit()
-question_pool = weighted_shuffle(question_pool)
 
 # -------------------- Game Variables --------------------
 rounds_played = 0
