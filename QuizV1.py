@@ -179,7 +179,6 @@ while rounds_played < num_rounds and index < len(question_pool):
     print(f"Answer: {answer}")
     user = int_check(f"{num1} {op} {num2} = ", allow_exit=True)
     if user == "xxx":
-        print("Exiting game. Goodbye!")
         break
 
     rounds_played += 1
@@ -216,5 +215,8 @@ if yes_no("See game history? ") == "yes":
     print()
     for item in game_history:
         print(item)
+    else:
+        if rounds_played == 0:
+            print("You didn't play any rounds, therefore there is no history to show")
 
 print("\n!!! Thanks for playing !!!")
