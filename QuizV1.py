@@ -39,7 +39,7 @@ def instructions():
 """)
 
 
-# -------------------- Operation Selection --------------------
+# Operation Selection
 def choose_operations():
     valid_ops = ["+", "-", "x", "/"]
     while True:
@@ -50,8 +50,8 @@ def choose_operations():
         print("Choose at least one valid operation.")
 
 
-# -------------------- Difficulty Selection --------------------
-def choose_difficulty():
+# Difficulty Selection
+def difficulty():
     while True:
         choice = input("Easy, Medium or Hard mode? ").lower().strip()
         if choice in ["easy", "e"]:
@@ -59,7 +59,7 @@ def choose_difficulty():
         elif choice in ["medium", "m"]:
             return 13, 40, "Medium"
         elif choice in ["hard", "h"]:
-            return 50, 100, "Hard"
+            return 9500, 10000, "Hard"
         else:
             print("Please choose Easy, Medium or Hard.")
 
@@ -74,7 +74,7 @@ def weighted_shuffle(questions):
 
 
 # -------------------- Question Pool --------------------
-def generate_question_pool(low, high, ops):
+def generate_questions(low, high, ops):
     pool = []
     seen = set()
 
@@ -124,12 +124,12 @@ def generate_question_pool(low, high, ops):
     return pool
 
 
-# -------------------- Main Program --------------------
+# Main Routine
 print("!!! Welcome to this Quiz game !!!\n")
 if yes_no("Do you want to read the instructions? ") == "yes":
     instructions()
 
-# -------------------- Rounds --------------------
+# Rounds
 while True:
     rounds_input = input("Rounds <enter for infinite>: ").strip()
     if rounds_input == "":
@@ -145,27 +145,27 @@ while True:
     except:
         print("Invalid input")
 
-# -------------------- Operations --------------------
+# Choosing a specific Operation (+, -, x, ÷)
 selected_ops = choose_operations()
 
-# -------------------- Difficulty --------------------
-low_num, high_num, difficulty_name = choose_difficulty()
+# Choosing Difficulty
+low_num, high_num, difficulty_name = difficulty()
 
 
-# -------------------- Generate Questions --------------------
-question_pool = generate_question_pool(low_num, high_num, selected_ops)
+# Generate Questions
+question_pool = generate_questions(low_num, high_num, selected_ops)
 if not question_pool:
     print("No valid questions possible.")
     exit()
 question_pool = weighted_shuffle(question_pool)
 
-# -------------------- Game Variables --------------------
+# Game Variables
 rounds_played = 0
 rounds_lost = 0
 game_history = []
 index = 0
 
-# -------------------- Game Loop --------------------
+# Game Loop (Generates Unlimited Questions in Infinite mode)
 while rounds_played < num_rounds and index < len(question_pool):
     if mode == "infinite":
         print(f"\n💿 Question {rounds_played + 1} (Infinite Mode, Current Mode: {difficulty_name})")
@@ -198,7 +198,7 @@ while rounds_played < num_rounds and index < len(question_pool):
 
         f"Question {rounds_played}: {num1} {op} {num2} = {answer} | {feedback} | {percent_won:.1f}% | {percent_lost:.1f}% | ")
 
-# -------------------- Results --------------------
+# Game Statistics
 if rounds_played > 0:
     percent_won = (rounds_played - rounds_lost) / rounds_played * 100
     percent_lost = rounds_lost / rounds_played * 100
@@ -210,7 +210,7 @@ print(f"👍 Won: {percent_won:.2f}%")
 print(f"😢 Lost: {percent_lost:.2f}%")
 print()
 
-# -------------------- History --------------------
+# History
 if yes_no("See game history? ") == "yes":
     print()
     for item in game_history:
