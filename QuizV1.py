@@ -9,7 +9,8 @@ def yes_no(question):
             return "yes"
         elif response in ["no", "n"]:
             return "no"
-        print("Please answer correctly")
+
+
 
 
 def int_check(question, allow_exit=False):
@@ -25,15 +26,15 @@ def int_check(question, allow_exit=False):
 
 def instructions():
     print("""
-                **** Instructions ****
-                
+            **** Instructions ****
+                    
 - Choose number of rounds or press <enter> for infinite mode.
-- Choose operations (+, -, x, ÷) first.
+- Choose operations (+, -, x, ÷)
 - Then choose difficulty (Easy / Medium / Hard) which automatically sets the range.
 - Multiplication appears more often.
 - Division always produces a whole number.
 - Type 'xxx' at any time to exit.
-- Use "/" for Division (÷)
+- Use "/" for Division
 
             🍀🍀🍀 Good Luck! 🍀🍀🍀
 """)
@@ -43,7 +44,7 @@ def instructions():
 def choose_operations():
     valid_ops = ["+", "-", "x", "/"]
     while True:
-        choice = input("Choose operations (+ - x ÷): ").lower().split()
+        choice = input("Choose operations (+ - x /): ").lower().split()
         selected = [op for op in choice if op in valid_ops]
         if selected:
             return selected
@@ -59,7 +60,7 @@ def difficulty():
         elif choice in ["medium", "m"]:
             return 13, 40, "Medium"
         elif choice in ["hard", "h"]:
-            return 9500, 10000, "Hard"
+            return 41, 100, "Hard"
         else:
             print("Please choose Easy, Medium or Hard.")
 
@@ -99,7 +100,7 @@ def generate_questions(low, high, ops):
                 key = make_key(a, b, "-")
                 if key not in seen:
                     seen.add(key)
-                    pool.append((a, b, a - b, "-"))
+                    pool.append((a, b, a * b, "-"))
 
     # Multiplication
     if "x" in ops:
@@ -125,7 +126,7 @@ def generate_questions(low, high, ops):
 
 
 # Main Routine
-print("!!! Welcome to this Quiz game !!!\n")
+print("\n")
 if yes_no("Do you want to read the instructions? ") == "yes":
     instructions()
 
@@ -168,11 +169,11 @@ index = 0
 # Game Loop (Generates Unlimited Questions in Infinite mode)
 while rounds_played < num_rounds and index < len(question_pool):
     if mode == "infinite":
-        print(f"\n💿 Question {rounds_played + 1} (Infinite Mode, Current Mode: {difficulty_name})")
+        print(f"\n💿 Question {rounds_played + 1} (Infinite Mode {difficulty_name})")
 
 
     else:
-        print(f"\n💿 Question {rounds_played + 1} of {int(num_rounds)} | Current Mode: {difficulty_name} 💿")
+        print(f"\n💿 Question {rounds_played + 1} of {int(num_rounds)} | Mode: {difficulty_name} 💿")
 
     num1, num2, answer, op = question_pool[index]
     index += 1
