@@ -126,7 +126,7 @@ def generate_questions(low, high, ops):
 
 
 # Main Routine
-print("\n")
+print(" === Number Quiz ===\n")
 if yes_no("Do you want to read the instructions? ") == "yes":
     instructions()
 
@@ -136,11 +136,13 @@ while True:
     if rounds_input == "":
         mode = "infinite"
         num_rounds = float("inf")
+        print(f"You picked Infinite mode!\n")
         break
     try:
         num_rounds = int(rounds_input)
         if num_rounds > 0:
             mode = "regular"
+            print(f"You picked to play {num_rounds} Rounds!\n")
             break
         print("Enter number >0")
     except:
