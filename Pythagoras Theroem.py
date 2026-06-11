@@ -40,6 +40,9 @@ while True:
 round_number = 0
 rounds_won = 0
 rounds_lost = 0
+played_rounds = False
+# Uses a list to store the answers for questions
+answer_list = []
 
 # Asks the user if they want infinite mode or if they want to choose an amount of rounds to play
 while True:
@@ -51,8 +54,16 @@ while True:
         break
     try:
         rounds_to_play = int(rounds_input)
-        print(f"Welcome to the game! {rounds_to_play} rounds!")
-        break
+
+        if rounds_to_play <= 0:
+            print("Please enter a number more than 0")
+            continue
+
+        if rounds_input == 1:
+            print(f"Welcome to the game! 1 Round!")
+        else:
+            print(f"Welcome to the game! {rounds_input} Rounds!")
+            break
 
     # Makes sure the user enters a number and nothing else
     except ValueError:
@@ -69,19 +80,24 @@ while rounds_to_play == -1 or round_number < rounds_to_play:
     c = round(math.sqrt(a ** 2 + b ** 2), 2)
     print()
 
-    # Checks which mode the user is playing, Infinite or non Infinite
+    answer_list.append(
+        f"Round {round_number + 1}: Side A = {side_one}, "
+        f"Side B = {side_two}, Answer = {c}"
+    )
+
+    # Checks which mode the user is playing, Infinite or non-Infinite
     if rounds_to_play == -1:
         print(f"Round: {round_number + 1} (Infinite Mode)")
     else:
         print(f"Round: {round_number + 1} of {rounds_to_play}")
     # Prints the two random sides and asks the question
     print(f"Side A: {side_one}, Side B: {side_two}")
+    print(f"Answer: {c}")
     user_input = (input(f"What is Side C? "))
 
     # Checks if the user enters <xxx> to leave the game
 
     if user_input == "xxx":
-        print()
         break
 
     # Tells the user to enter a number if they enter nothing or a letter
@@ -90,6 +106,7 @@ while rounds_to_play == -1 or round_number < rounds_to_play:
         print("Incorrect")
         print("Please enter a number")
         round_number += 1
+        played_rounds = True
         rounds_lost += 1
         continue
 
@@ -99,6 +116,7 @@ while rounds_to_play == -1 or round_number < rounds_to_play:
         print("Enter a number")
         rounds_lost += 1
         round_number += 1
+        played_rounds = True
         continue
 
     question = float(user_input)
@@ -114,7 +132,7 @@ while rounds_to_play == -1 or round_number < rounds_to_play:
         rounds_lost += 1
         round_number += 1
 # Game History
-game_history = f"Wins: {rounds_won}\nFails: {rounds_lost}"
+
 
 if round_number > 0:
     # calculate statistics
@@ -123,24 +141,21 @@ if round_number > 0:
     percent_lost = rounds_lost / round_number * 100
 
     # Ask user if they want to see their game history output if it requested
-    while True:
-        see_history = input("\nDo you want to see your Game History? ")
+    see_history = input("\nDo you want to see your Game History? ")
+    if see_history.lower() in ["yes", "y"]:
+        # output game statistics
+        print()
+        print("📊📊📊Game Statistics📊📊📊")
+        print(f"👍Correct: {percent_won: .2f}% \t "
+              f"😢Incorrect: {percent_lost:.2f}%")
+        print()
+    if see_history.lower() in ["yes", "y"]:
+        for item in answer_list:
+            print(item)
 
-        if see_history in ("yes", "y"):
-            print(game_history)
-            print()
-            break
 
-        elif see_history in ("no", "n"):
-            print("Thanks for playing")
-            exit()
-
-        else:
-            print("Please enter yes or no")
-
-    # output game statistics
-    print("📊📊📊Game Statistics📊📊📊")
-    print(f"👍Won: {percent_won: .2f} \t "
-          f"😢Lost: {percent_lost:.2f} \t ")
+else:
+    # if user enters <xxx> before playing one round
+    print("\nNo history")
 
 
